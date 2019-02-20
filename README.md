@@ -35,7 +35,7 @@ This example shows the use of `serverReadyAction` in a launch configuration of a
 }
 ```
 
-If necessary you can supply a `urlFormat` to control the shape of the URI and the value of the `webRoot` property passed to the chrome debugger.
+If necessary you can supply a `uriFormat` to control the shape of the URI and the value of the `webRoot` property passed to the chrome debugger.
 
 Here are all supported properties and their default values:
 ```ts
