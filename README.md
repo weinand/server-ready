@@ -1,6 +1,6 @@
 # Server Ready
 
-This small extensions helps when developing (web) server based software.
+This extension helps when developing web server based software.
 
 When installed **Server Ready** automatically opens a URI in the default browser whenever a server under debugging is ready to accept client connections (and outputs a corresponding message to the debug console).
 
@@ -10,29 +10,22 @@ Alternatively the extension can be configured to open the URI in Chrome and star
 
 ## Requirements
 
-If you want to have the extension start a debug session (instead of just opening the URI in a browser), you will have to install the Chrome Debugger extension.
+If you configure Server Ready to start a debug session (instead of just opening the URI in a browser), you will have to install the [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome) extension.
 
 ## Using Server Ready
 
-In a launch configuration use Intellisense to add a `serverReadyAction` property. By default this is configured for the regular expression pattern `listening on port ([0-9]+)`. If your server program outputs a different message, change the pattern to match the message. Make sure to enclose the regular expression for the port number in parenthesis so that the number becomes available when generating the URI.
+In a launch configuration use Intellisense to add a `serverReadyAction` property. By default this is configured for the pattern `listening on port ([0-9]+)`. If your server program outputs a different message, change the pattern to match the message. Make sure to enclose the regular expression for the port number in parenthesis so that the number becomes available when generating the URI.
 
-Example:
+This example shows the use of `serverReadyAction` in a launch configuration of a simple Express server:
 ```ts
 {
-	// Use IntelliSense to learn about possible Node.js debug attributes.
-	// Hover to view descriptions of existing attributes.
-	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Launch Program",
-			"protocol": "inspector",
+			"name": "Launch Express Server",
 			"program": "${workspaceFolder}/app.js",
-			"outFiles": [
-				"${workspaceFolder}/out/**/*.js"
-			],
 
 			"serverReadyAction": {
 				"pattern": "listening on port ([0-9]+)"
@@ -41,6 +34,7 @@ Example:
 	]
 }
 ```
+
 If necessary you can supply a `urlFormat` to control the shape of the URI and the value of the `webRoot` property passed to the chrome debugger.
 
 Here are all supported properties and their default values:
