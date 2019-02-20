@@ -2,7 +2,7 @@
 	"name": "server-ready",
 	"displayName": "Server Ready",
 	"description": "Open URI in browser if server under debugging is ready.",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"publisher": "andreweinand",
 	"author": {
 		"name": "Microsoft Corporation",
