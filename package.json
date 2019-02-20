@@ -1,14 +1,28 @@
 {
 	"name": "server-ready",
-	"displayName": "server-ready",
-	"description": "Open uri if server under debugging is ready",
-	"version": "0.0.1",
+	"displayName": "Server Ready",
+	"description": "Open URI in browser if server under debugging is ready.",
+	"version": "0.1.0",
+	"publisher": "andreweinand",
+	"author": {
+		"name": "Microsoft Corporation",
+		"email": "aweinand@microsoft.com"
+	},
+	"license": "MIT",
 	"engines": {
-		"vscode": "^1.31.0"
+		"vscode": "^1.32.0",
+		"node": "^10.15.1"
 	},
 	"categories": [
-		"Other"
+		"Debuggers"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/weinand/server-ready.git"
+	},
+	"bugs": {
+		"url": "https://github.com/weinand/server-ready/issues"
+	},
 	"activationEvents": [
 		"onDebug",
 		"onDebugAdapterProtocolTracker"
@@ -23,7 +37,7 @@
 						"properties": {
 							"serverReadyAction": {
 								"type": "object",
-								"markdownDescription": "Server ready options.",
+								"markdownDescription": "Server Ready options.",
 								"default": {
 									"pattern": "listening on port ([0-9]+)"
 								},
@@ -33,20 +47,20 @@
 										"markdownDescription": "Server is ready if this pattern appears on the debug console. The first group must include the port number.",
 										"default": "listening on port ([0-9]+)"
 									},
-									"urlFormat": {
+									"uriFormat": {
 										"type": "string",
-										"markdownDescription": "Server is ready if this pattern appears on the debug console. The first group must include the port number.",
+										"markdownDescription": "A format string used when constructing the URI. The first '%s' is substituted with the port number.",
 										"default": "http://localhost:%s"
 									},
 									"webRoot": {
 										"type": "string",
-										"markdownDescription": "Passed to debug configuration.",
+										"markdownDescription": "Literally passed to chrome debug configuration.",
 										"default": "${workspaceFolder}"
 									},
 									"debug": {
 										"type": "boolean",
-										"markdownDescription": "Server is ready if this pattern appears on the debug console.",
-										"default": false
+										"markdownDescription": "If true a chrome debug session is started with the URI.",
+										"default": true
 									}
 								}
 							}
@@ -61,9 +75,16 @@
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "yarn run compile && node ./node_modules/vscode/bin/test"
+		"test": "yarn run compile && node ./node_modules/vscode/bin/test",
+		"package": "vsce package",
+		"publish": "vsce publish"
 	},
 	"devDependencies": {
-		"@types/node": "8.0.33"
+		"@types/node": "10.12.12",
+		"@types/mocha": "^2.2.42",
+		"typescript": "^3.1.4",
+		"vsce": "^1.57.1",
+		"tslint": "^5.8.0",
+		"vscode": "^1.1.25"
 	}
 }

@@ -1,65 +1,64 @@
-# server-ready README
+# Server Ready
 
-This is the README for your extension "server-ready". After writing up a brief description, we recommend including the following sections.
+This small extensions helps when developing (web) server based software.
 
-## Features
+When installed **Server Ready** automatically opens a URI in the default browser whenever a server under debugging is ready to accept client connections (and outputs a corresponding message to the debug console).
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+For this functionality the extension scans the server's output for a configurable pattern and extracts a port number from it.
+Based on the port number a URI of the form `http://localhost:port` is constructed and opened in the default browser.
+Alternatively the extension can be configured to open the URI in Chrome and start a debug session with the "Chrome Debugger".
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+If you want to have the extension start a debug session (instead of just opening the URI in a browser), you will have to install the Chrome Debugger extension.
 
-## Extension Settings
+## Using Server Ready
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+In a launch configuration use Intellisense to add a `serverReadyAction` property. By default this is configured for the regular expression pattern `listening on port ([0-9]+)`. If your server program outputs a different message, change the pattern to match the message. Make sure to enclose the regular expression for the port number in parenthesis so that the number becomes available when generating the URI.
 
-For example:
+Example:
+```ts
+{
+	// Use IntelliSense to learn about possible Node.js debug attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Launch Program",
+			"protocol": "inspector",
+			"program": "${workspaceFolder}/app.js",
+			"outFiles": [
+				"${workspaceFolder}/out/**/*.js"
+			],
 
-This extension contributes the following settings:
+			"serverReadyAction": {
+				"pattern": "listening on port ([0-9]+)"
+			}
+		}
+	]
+}
+```
+If necessary you can supply a `urlFormat` to control the shape of the URI and the value of the `webRoot` property passed to the chrome debugger.
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+Here are all supported properties and their default values:
+```ts
+"serverReadyAction": {
+	"pattern": "listening on port ([0-9]+)",
+	"uriFormat": "http://localhost:%s",
+	"webRoot": "${workspaceFolder}",
+	"debug": true
+}
+```
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+TBD
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Initial release of Server Ready.

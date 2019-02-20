@@ -11,12 +11,11 @@
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
-				"/Users/weinand/MS/Projects/Scenarios/express/hello world"
 			],
 			"outFiles": [
 				"${workspaceFolder}/out/**/*.js"
 			],
-			//"preLaunchTask": "npm: watch"
+			"preLaunchTask": "npm: watch"
 		},
 		{
 			"name": "Extension Tests",
